@@ -24,7 +24,7 @@ public class Part1 {
             }
             
         }
-        return dna.length();
+        return -1;
     }
     
     public static String findGene(String dna) {
