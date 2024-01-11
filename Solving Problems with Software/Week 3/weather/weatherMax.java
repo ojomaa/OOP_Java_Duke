@@ -31,7 +31,7 @@ public class weatherMax {
         FileResource fr = new FileResource();
         CSVRecord coldest = coldestHourInFile(fr.getCSVParser());
         System.out.println("Coldest: " + coldest.get("TemperatureF") + 
-        " Time: " + coldest.get("TimeEST"));
+        " Time: " + coldest.get("DateUTC"));
     }
     
     public String fileWithColdestTemperature(){
@@ -64,10 +64,10 @@ public class weatherMax {
     public void testFileWithColdestTemperature() {
         String coldestFile = fileWithColdestTemperature();
         System.out.println("Coldest temperature was recorded in the file: " + coldestFile);
-        FileResource fr = new FileResource("./2014/" + coldestFile);
+        FileResource fr = new FileResource("./2013/" + coldestFile);
         CSVRecord coldestRecord = coldestHourInFile(fr.getCSVParser());
         System.out.println("Coldest temperature on that day was: " + coldestRecord.get("TemperatureF")
-        + " at " + coldestRecord.get("TimeEST"));
+        + " at " + coldestRecord.get("DateUTC"));
     }
     
     public CSVRecord lowestHumidityInFile(CSVParser parser){
@@ -172,7 +172,7 @@ public class weatherMax {
         
         for(CSVRecord r : parser){
             double current = Double.parseDouble(r.get("TemperatureF"));
-            if( current > value){
+            if( current >= value){
                 totalTemp += current;
                 fileLength ++;
             }
@@ -191,7 +191,7 @@ public class weatherMax {
         FileResource fr = new FileResource();
         CSVParser parser = fr.getCSVParser();
 
-        int humidityThreshold = 30;
+        int humidityThreshold = 80;
 
         double averageTemperature = averageTemperatureWithHighHumidityInFile(parser, humidityThreshold);
 

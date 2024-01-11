@@ -13,11 +13,11 @@ public class Export {
         
         //listExportersTwoProducts
         parser = fr.getCSVParser();
-        listExportersTwoProducts(parser, "gold", "diamonds");
+        listExportersTwoProducts(parser, "cotton", "flowers");
         
         //numberOfExporters
         parser = fr.getCSVParser();
-        int count = numberOfExporters(parser, "gold");
+        int count = numberOfExporters(parser, "cocoa");
         System.out.println("Number of exporters: " + count);
         
         //bigExporters
