@@ -74,27 +74,34 @@ public class CaesarBreaker {
     }
     
     public String decryptTwoKeys(String encrypted){
-        /**
-         * Write the method decryptTwoKeys in the CaesarBreaker class that has one parameter,
-         * a String parameter named encrypted that represents a String that was encrypted
-         * with the two key algorithm discussed in the previous lesson.
-         * This method attempts to determine the two keys used to encrypt the message,
-         * prints the two keys, and then returns the decrypted String with those two keys.
-         * More specifically, this method should:
+        CaesarCipher cc = new CaesarCipher();
+        
+        String s1 = halfOfString(encrypted, 0);
+        String s2 = halfOfString(encrypted, 1);
+        
+        int key1 = getKey(s1);
+        int key2 = getKey(s2);
+        
+        System.out.println("Key1: " + key1 + " Key2: " + key2);
+        
+        return cc.encryptTwoKeys(encrypted, 26 - key1, 26 - key2);
+    }
+    
+    public void testdecryptTwoKeys(){
+        FileResource fr = new FileResource();
+        String originalMessage = fr.asString();
+        System.out.println("Original Message:\n" + originalMessage);
 
-        - Calculate a String of every other character starting with the first character
-        of the encrypted String by calling halfOfString. 
+        int key1 = 2;
+        int key2 = 20;
 
-        - Calculate a String of every other character starting with the second character
-        of the encrypted String. 
+        // Encrypt the message
+        CaesarCipher cc = new CaesarCipher();
+        String encryptedMessage = cc.encryptTwoKeys(originalMessage, key1, key2);
+        System.out.println("Encrypted Message:\n" + encryptedMessage);
 
-        - Then calculate the key used to encrypt each half String.
-
-        - You should print the two keys found.
-
-        - Calculate and return the decrypted String using the encryptTwoKeys method
-        from your CaesarCipher class, again making sure it is in the
-        same folder as your CaesarBreaker class.
-         */
+        // Decrypt the message
+        String decryptedMessage = decryptTwoKeys(originalMessage);
+        System.out.println("Decrypted Message:\n" + decryptedMessage);
     }
 }
