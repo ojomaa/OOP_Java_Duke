@@ -34,29 +34,7 @@ public class CaesarCipherTwo {
     }
     
     public String decrypt(String input) {
-        StringBuilder decrypted = new StringBuilder(input);
-
-        for (int i = 0; i < input.length(); i++) {
-            char currChar = input.charAt(i);
-            int indx = alphabet.indexOf(Character.toLowerCase(currChar));
-
-            String decryptAlphabet;
-            if (i % 2 == 0) {
-                decryptAlphabet = shifted1;
-            } else {
-                decryptAlphabet = shifted2;
-            }
-
-            if (indx != -1) {
-                char decrChar = decryptAlphabet.charAt(indx);
-
-                if (Character.isUpperCase(currChar)) {
-                    decrChar = Character.toUpperCase(decrChar);
-                }
-                decrypted.setCharAt(i, decrChar);
-            }
-        }
-
-        return decrypted.toString();
+        CaesarCipherTwo cc = new CaesarCipherTwo(26 - mainKey1, 26-mainKey2);
+        return cc.encrypt(input);
     }
 }

@@ -27,7 +27,7 @@ public class TestCaesarCipher {
     public void simpleTests(){
         FileResource fr = new FileResource();
         String message = fr.asString();
-        CaesarCipherOOP cc = new CaesarCipherOOP(18);
+        CaesarCipherOOP cc = new CaesarCipherOOP(15);
         
         // Encrypt
         String encrypted = cc.encrypt(message);

@@ -38,7 +38,12 @@ public class TestCaesarCipherTwo {
     
     public int getKey(String s){
         int[] freqs = countLetters(s);
-        int key = maxIndex(freqs);
+        int maxDex = maxIndex(freqs);
+        int key = maxDex - 4;
+        
+        if(maxDex < 4){
+            key = 26 - (4 - maxDex);
+        }
         
         return key;
     }
@@ -48,13 +53,14 @@ public class TestCaesarCipherTwo {
         String s2 = halfOfString(encrypted, 1);
         
         int key1 = getKey(s1);
+        int[] freqs = countLetters(s2);
         int key2 = getKey(s2);
         
-        CaesarCipherTwo cc = new CaesarCipherTwo(key1, key2);
+        CaesarCipherTwo cc = new CaesarCipherTwo(26-key1, 26-key2);
         
-        System.out.println("Key1: " + key1 + " Key2: " + key2);
+        System.out.println("Key1: " + (key1) + " Key2: " + (key2));
         
-        String decrypted = cc.decrypt(encrypted);
+        String decrypted = cc.encrypt(encrypted);
         
         System.out.println("Decrypted Message: " + decrypted);
     }
@@ -62,11 +68,15 @@ public class TestCaesarCipherTwo {
     public void simpleTests(){
         FileResource fr = new FileResource();
         String message = fr.asString();
-        CaesarCipherTwo cc = new CaesarCipherTwo(17, 3);
+        CaesarCipherTwo cc = new CaesarCipherTwo(21, 8);
         
         // Encrypted
-        String encrypted = cc.encrypt(message);
+        //String encrypted = cc.encrypt(message);
+        String encrypted = "Aal uttx hm aal Qtct Fhljha pl Wbdl. Pvxvxlx!";
         System.out.println("Encrypted: " + encrypted);
+        
+        String decrypted = cc.decrypt(encrypted);
+        System.out.println("Decrypted: " + decrypted);
         
         // Decrypted
         breakCaesarCipher(encrypted);
