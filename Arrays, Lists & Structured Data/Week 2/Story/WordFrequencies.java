@@ -45,14 +45,13 @@ public class WordFrequencies {
     public void tester(){
         findUnique();
 
-        System.out.println("Number of unique words: " + myWords.size());
-
         for (int i = 0; i < myWords.size(); i++) {
             String word = myWords.get(i);
             int freq = myFreqs.get(i);
             System.out.println(freq + "\t" + word);
         }
         int max = findIndexOfMax();
+        System.out.println("Number of unique words: " + myWords.size());
         System.out.println("The word that occurs most often and its count are: " + myWords.get(max) + myFreqs.get(max));
     }
 }
