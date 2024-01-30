@@ -60,8 +60,9 @@ public class CharactersInPlay {
     public void tester() {
 
         findAllCharacters();
-        int speakingPartsThreshold = 200;
-
+        int speakingPartsThreshold = 60;
+        
+        /*
         System.out.println("Main Characters with More than " + speakingPartsThreshold + " Speaking Parts:");
         
         for (int i = 0; i < names.size(); i++) {
@@ -72,7 +73,7 @@ public class CharactersInPlay {
                 System.out.println(character + ": " + speakingParts + " speaking parts");
             }
         }
-        
+        */
         charactersWithNumParts(10,15);
     }
 }

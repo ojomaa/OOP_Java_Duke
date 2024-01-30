@@ -87,7 +87,7 @@ public class WordsInFiles {
         //int maxNumber = maxNumber();
         //System.out.println("Maximum number of files any word is in: " + maxNumber);
 
-        //System.out.println("Words in the number of files (" + 4 + "): " + "num: " + wordsInNumFiles(4).size() + " words: " + wordsInNumFiles(4));
+        //System.out.println("Words in the number of files (" + 7 + "): " + "num: " + wordsInNumFiles(7).size() + " words: " + wordsInNumFiles(4));
         /*
         for (String word : wordsInMaxFiles) {
             System.out.println("Files containing the word '" + word + "':");
@@ -95,7 +95,7 @@ public class WordsInFiles {
             System.out.println();
         }
         */
-        System.out.println("Words in files: " + WordMap.get("red"));
+        System.out.println("Words in files: " + WordMap.get("tree"));
     }
 
     // Helper method to print the complete WordMap (optional)

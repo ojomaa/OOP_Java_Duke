@@ -69,7 +69,7 @@ public class CodonCount {
       
        
        int start = 1;
-       int end = 5;
+       int end = 8;
         
        buildCodonMap(0, dna);
        System.out.println("Reading frame starting with 0 results in "+CodonMap.size()+" unique codons"+"\t");
@@ -77,19 +77,23 @@ public class CodonCount {
        System.out.println("and most common codon is "+the_largest_count+" with count "+CodonMap.get(the_largest_count)+"\t");  
        System.out.println("Counts of codons between "+start+" and "+end+" inclusive are:"+"\t");
        printTotalCounts(start, end);
-        
+       
+       /*
        buildCodonMap(1, dna);
        System.out.println("Reading frame starting with 1 results in "+CodonMap.size()+" unique codons"+"\t");
-       the_largest_count = getMostCommonCodon();
+       String the_largest_count = getMostCommonCodon();
        System.out.println("and most common codon is "+the_largest_count+" with count "+CodonMap.get(the_largest_count)+"\t");  
        System.out.println("Counts of codons between "+start+" and "+end+" inclusive are:"+"\t");
        printTotalCounts(start, end);
-        
+       */
+      
+        /*
        buildCodonMap(2, dna);
        System.out.println("Reading frame starting with 2 results in "+CodonMap.size()+" unique codons"+"\t");
-       the_largest_count = getMostCommonCodon();
+       String the_largest_count = getMostCommonCodon();
        System.out.println("and most common codon is "+the_largest_count+" with count "+CodonMap.get(the_largest_count)+"\t");  
        System.out.println("Counts of codons between "+start+" and "+end+" inclusive are:"+"\t");
        printTotalCounts(start, end);
+       */
     }
 }
