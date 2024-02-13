@@ -29,35 +29,21 @@ public class VigenereBreaker {
     }
 
     public void breakVigenere () {
+        
+        HashMap<String, HashSet<String>> dictionaries = new HashMap<>();
+
+        String[] languages = {"Danish", "Dutch", "English", "French", "German", "Italian", "Portuguese", "Spanish"};
+        for (String language : languages) {
+            FileResource dictResource = new FileResource("./dictionaries/" + language);
+            HashSet<String> dictionary = readDictionary(dictResource);
+            dictionaries.put(language, dictionary);
+            System.out.println("Dictionary for " + language + " has been loaded.");
+        }
+
         FileResource fr = new FileResource();
         String encrypted = fr.asString();
-        FileResource dictResource = new FileResource("./dictionaries/English");
-        HashSet<String> dictionary = readDictionary(dictResource);
-        
-        int maxKeyLength = 100; // Set the maximum key length
-        int bestKeyLength = 0;
-        int maxWordCount = 0;
-        String firstLine = null;
-        
-        for (int i = 1; i <= maxKeyLength; i++) {
-            int[] keyLength = tryKeyLength(encrypted, i, 'e');
-            VigenereCipher vc = new VigenereCipher(keyLength);
-            String decrypted = vc.decrypt(encrypted);
-            int wordCount = countWords(decrypted, dictionary);
 
-            if (wordCount > maxWordCount) {
-                maxWordCount = wordCount;
-                bestKeyLength = i;
-                firstLine = decrypted.split("\\r?\\n")[0];
-            }
-        }
-        
-        String decrypt = breakForLanguage(encrypted, dictionary);
-        System.out.println("Decrypted Message: " + decrypt);
-        int count = countWords(decrypt, dictionary);
-        System.out.println("Valid words: " + count);
-        System.out.println("Best key length: " + bestKeyLength);
-        System.out.println(firstLine);
+        breakForAllLangs(encrypted, dictionaries);
     }
     
     public HashSet<String> readDictionary(FileResource fr){
@@ -87,21 +73,69 @@ public class VigenereBreaker {
     public String breakForLanguage(String encrypted, HashSet<String> dictionary){
         int maxCount = 0;
         String bestDecryption = "";
-        int key = 0;
-        for(int i=1; i <= 100; i++){
-            int[] keyLength = tryKeyLength(encrypted, i, 'e');
+        char mostCommonChar = mostCommonCharIn(dictionary);
+        int bestKeyLength = 0;
+
+        for (int i = 1; i <= 100; i++) {
+            int[] keyLength = tryKeyLength(encrypted, i, mostCommonChar);
             VigenereCipher vc = new VigenereCipher(keyLength);
             String decrypt = vc.decrypt(encrypted);
             int wordCount = countWords(decrypt, dictionary);
-            
+
             if (wordCount > maxCount) {
                 maxCount = wordCount;
                 bestDecryption = decrypt;
-                key = i;
+                bestKeyLength = i;
             }
         }
-        System.out.println("Key Length: " + key);
+    
+        System.out.println("Best key length: " + bestKeyLength);
         return bestDecryption;
+    }
+    
+    public char mostCommonCharIn(HashSet<String> dictionary){
+        char mostCommonLetter = ' ';
+        HashMap<Character, Integer> letters = new HashMap<Character, Integer>();
+        int count = 0;
+        for(String word : dictionary){
+            for(int i=0; i< word.length(); i++){
+                char letter = word.charAt(i);
+                if(!letters.containsKey(letter)){
+                    letters.put(letter, 1);
+                }
+                else{
+                    letters.put(letter, letters.get(letter) + 1);
+                }
+            }
+        }
+        
+        for( char letter : letters.keySet()){
+            if(letters.get(letter) > count){
+                mostCommonLetter = letter;
+                count = letters.get(letter);
+            }
+        }
+        
+        return mostCommonLetter;
+    }
+    
+    public void breakForAllLangs(String encrypted, HashMap<String, HashSet<String>> languages) {
+        int maxWords = 0;
+        String decryptedMessage = "";
+        HashMap<String, Integer> langsMostWords = new HashMap<String, Integer>();
+        for(String language : languages.keySet()) {
+            HashSet<String> dictionary = languages.get(language);
+            decryptedMessage = breakForLanguage(encrypted, dictionary);
+            int count = countWords(decryptedMessage, dictionary);
+            langsMostWords.put(language, count);
+        }
+        for(String lang : langsMostWords.keySet()) {
+            if(langsMostWords.get(lang) > maxWords) {
+                maxWords = langsMostWords.get(lang);
+                System.out.println(decryptedMessage);
+                System.out.println("Language: " + lang + " with " + maxWords + " # of words\n");
+            }
+        }
     }
     
     public void test(){
